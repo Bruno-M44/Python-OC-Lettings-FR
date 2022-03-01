@@ -4,3 +4,5 @@ venv
 .venv
 .vscode
 .pytest_cache
+sqlite3.exe
+oc-lettings-site-old.sqlite3
