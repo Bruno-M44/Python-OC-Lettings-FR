@@ -11,6 +11,11 @@ orbs:
   # See the orb documentation here: https://circleci.com/developer/orbs/orb/circleci/python
   python: circleci/python@1.5.0
 
+executors:
+  my-machine:
+    machine: true
+    working_directory: /tmp/workspace
+
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
@@ -39,6 +44,7 @@ jobs:
           command: pytest
 
   build-push-docker:
+    executor: my-machine
     steps:
       - checkout
       - run:
