@@ -37,7 +37,6 @@ jobs:
           name: Run tests
           # This assumes pytest is installed via the install-package step above
           command: pytest
-
   build-push-docker:
     executor: my-machine
     steps:
@@ -60,3 +59,4 @@ workflows:
     # Inside the workflow, you define the jobs you want to run.
     jobs:
       - build-and-test
+      - build-push-docker
