@@ -27,18 +27,18 @@ class TestProfilesView(TestCase):
 
     def test_profile_view(self):
         client = Client()
-        path = reverse('profile', kwargs={'username': "Bruno"})
+        path = reverse('profiles:profile', kwargs={'username': "Bruno"})
         response = client.get(path)
         content = response.content.decode()
         expected_content = "<title>Bruno</title>"
 
         assert expected_content in content
         assert response.status_code == 200
-        assertTemplateUsed(response, "profile.html")
+        assertTemplateUsed(response, "profiles/profile.html")
 
-    def test_profiles_index_view(self):
+    def test_index_view(self):
         client = Client()
-        path = reverse('profiles_index')
+        path = reverse('profiles:index')
         response = client.get(path)
         content = response.content.decode()
         expected_title = "<title>Profiles</title>"
@@ -50,4 +50,4 @@ class TestProfilesView(TestCase):
         assert excepted_profile_2 in content
 
         assert response.status_code == 200
-        assertTemplateUsed(response, "profiles_index.html")
+        assertTemplateUsed(response, "profiles/index.html")

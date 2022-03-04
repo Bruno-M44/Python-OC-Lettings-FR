@@ -32,18 +32,18 @@ class TestLettingsView(TestCase):
 
     def test_letting_view(self):
         client = Client()
-        path = reverse('letting', kwargs={'letting_id': 1})
+        path = reverse('lettings:letting', kwargs={'letting_id': 1})
         response = client.get(path)
         content = response.content.decode()
         expected_content = "<title>Campaign Retreat</title>"
 
         assert expected_content in content
         assert response.status_code == 200
-        assertTemplateUsed(response, "letting.html")
+        assertTemplateUsed(response, "lettings/letting.html")
 
-    def test_lettings_index_view(self):
+    def test_index_view(self):
         client = Client()
-        path = reverse('lettings_index')
+        path = reverse('lettings:index')
         response = client.get(path)
         content = response.content.decode()
         expected_title = "<title>Lettings</title>"
@@ -55,4 +55,4 @@ class TestLettingsView(TestCase):
         assert excepted_letting_2 in content
 
         assert response.status_code == 200
-        assertTemplateUsed(response, "lettings_index.html")
+        assertTemplateUsed(response, "lettings/index.html")

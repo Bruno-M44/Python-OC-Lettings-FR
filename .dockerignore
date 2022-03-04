@@ -7,3 +7,4 @@ venv
 sqlite3.exe
 oc-lettings-site-old.sqlite3
 circleci-cli_0.1.16947_windows_amd64
+data
