@@ -51,3 +51,4 @@ workflows:
       - heroku_deploy:
           requires:
             - build-push-docker
+
