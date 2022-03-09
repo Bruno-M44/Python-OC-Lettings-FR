@@ -40,8 +40,15 @@ jobs:
     executor: heroku/default
     steps:
       - checkout
+      - heroku/install
+      - run:
+          command: >
+            echo "Please wait for deployment"
+      - run: heroku config:set DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY -a $HEROKU_APP_NAME
+      - run: heroku config:set DSN_SENTRY=$DSN_SENTRY -a $HEROKU_APP_NAME
       - heroku/deploy-via-git:
-          force: true
+          app-name: $HEROKU_APP_NAME
+          api-key: HEROKU_API_KEY
 
 workflows:
   sample:
