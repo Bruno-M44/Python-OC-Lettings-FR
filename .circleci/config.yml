@@ -51,11 +51,24 @@ jobs:
           api-key: HEROKU_API_KEY
 
 workflows:
-  sample:
+  master_commit:
     jobs:
       - build-and-test
+          filters:
+            branches:
+              only:
+                - master
       - build-push-docker
+          requires:
+            - build-and-test
       - heroku_deploy:
           requires:
             - build-push-docker
+  dev_commit:
+    jobs:
+      - build-and-test:
+          filters:
+            branches:
+              ignore:
+                - master
 

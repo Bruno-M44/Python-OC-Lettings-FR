@@ -57,7 +57,7 @@ Dans le reste de la documentation sur le développement local, il est supposé q
 
 - `cd /path/to/Python-OC-Lettings-FR`
 - Ouvrir une session shell `sqlite3`
-- Se connecter à la base de données `.open oc-lettings-site.sqlite3`
+- Se connecter à la base de données `.open oc-lettings.sqlite3`
 - Afficher les tables dans la base de données `.tables`
 - Afficher les colonnes dans le tableau des profils, `pragma table_info(Python-OC-Lettings-FR_profile);`
 - Lancer une requête sur la table des profils, `select user_id, favorite_city from
@@ -75,3 +75,66 @@ Utilisation de PowerShell, comme ci-dessus sauf :
 
 - Pour activer l'environnement virtuel, `.\venv\Scripts\Activate.ps1` 
 - Remplacer `which <my-command>` par `(Get-Command <my-command>).Path`
+
+---
+## Déploiement
+
+### Description du fonctionnement du Pipeline CircleCi
+
+#### Lors d'un commit sur n'importe quelle branche autre que la master :
+- Lancement du job :
+    - build-and-test : 
+      - créer le build et lance les tests de l'application
+    
+#### Lors d'un commit sur la branche master :
+   
+- Lancement des jobs :
+     - build-and-test
+     - si ok, lancement du job build-push-docker :
+        - Cela va créer une image docker et l'uploader sur le docker hub.
+    - si ok lancement du job heroku_deploy :
+        - Cela va lancer le build de l'application sur Heroku via Git.
+
+---
+
+## CircleCi :
+
+Paramétrage nécessaire : 
+
+Création des variables d'environnement au niveau du projet :
+
+- Dans **Projets**:
+- Cliquez sur `Project Settings`  (Les 3 petits points)
+- Cliquez sur `Environment Variables`  
+- Cliquez sur `Add Environment Variables`  
+
+|   Nom des Variables  |   Valeurs à renseigner   |  
+|---    |---    |  
+|   DJANGO_SECRET_KEY   |   `fp$9^593hsriajg$_%=5trot9g!1qa@ew(o-1#@=&4%=hp46(s`   |  
+|   DOCKER_TOKEN   |   `zJVkhL4wERc32a`   |  
+|   DOCKER_USER |   `brunom44`   |  
+| DSN_SENTRY    | `https://9b0b08a4791c473d9332fabedc59e4de@o1162749.ingest.sentry.io/6250264` |  
+| HEROKU_API_KEY  |  `60f3a178-a9be-4958-a5d0-c8b1bbc82ace`  |  
+| HEROKU_APP_NAME | `oc-lettings-b44` |  
+---
+
+## Docker Hub :
+
+[Docker-Hub brunom44 Repository](https://hub.docker.com/repository/docker/brunom44/oc-lettings) permet de stocker en ligne l'image docker de notre application.  
+
+La commande unique pour récupération de l'application en local et son démarrage immédiat est :
+
+`docker run --pull always -p 8000:8000 --name oc-lettings brunom44/oc-lettings:lastest && docker-compose up`  
+
+L'application est accessible à l'adresse suivante : [http://localhost:8000/]
+
+---
+
+## Heroku :
+[L'application sur Heroku](https://oc-lettings-b44.herokuapp.com/)  
+
+---
+
+## Sentry :
+
+Sentry permet de faire le [monitoring de l'application](https://sentry.io/organizations/my-company-6c/projects/oc-lettings/?project=6250264).
