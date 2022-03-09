@@ -53,12 +53,12 @@ jobs:
 workflows:
   master_commit:
     jobs:
-      - build-and-test
+      - build-and-test:
           filters:
             branches:
               only:
                 - master
-      - build-push-docker
+      - build-push-docker:
           requires:
             - build-and-test
       - heroku_deploy:
@@ -71,4 +71,3 @@ workflows:
             branches:
               ignore:
                 - master
-
