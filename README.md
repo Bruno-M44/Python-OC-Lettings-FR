@@ -1,77 +1,32 @@
-## Résumé
-
-Site web d'Orange County Lettings
-
-## Développement local
-
-### Prérequis
-
-- Compte GitHub avec accès en lecture à ce repository
-- Git CLI
-- SQLite3 CLI
-- Interpréteur Python, version 3.6 ou supérieure
-
-Dans le reste de la documentation sur le développement local, il est supposé que la commande `python` de votre OS shell exécute l'interpréteur Python ci-dessus (à moins qu'un environnement virtuel ne soit activé).
-
-### macOS / Linux
-
-#### Cloner le repository
-
-- `cd /path/to/put/project/in`
-- `git clone https://github.com/OpenClassrooms-Student-Center/Python-OC-Lettings-FR.git`
-
-#### Créer l'environnement virtuel
-
-- `cd /path/to/Python-OC-Lettings-FR`
-- `python -m venv venv`
-- `apt-get install python3-venv` (Si l'étape précédente comporte des erreurs avec un paquet non trouvé sur Ubuntu)
-- Activer l'environnement `source venv/bin/activate`
-- Confirmer que la commande `python` exécute l'interpréteur Python dans l'environnement virtuel
-`which python`
-- Confirmer que la version de l'interpréteur Python est la version 3.6 ou supérieure `python --version`
-- Confirmer que la commande `pip` exécute l'exécutable pip dans l'environnement virtuel, `which pip`
-- Pour désactiver l'environnement, `deactivate`
-
-#### Exécuter le site
-
-- `cd /path/to/Python-OC-Lettings-FR`
-- `source venv/bin/activate`
-- `pip install --requirement requirements.txt`
-- `python manage.py runserver`
-- Aller sur `http://localhost:8000` dans un navigateur.
-- Confirmer que le site fonctionne et qu'il est possible de naviguer (vous devriez voir plusieurs profils et locations).
-
-#### Linting
-
-- `cd /path/to/Python-OC-Lettings-FR`
-- `source venv/bin/activate`
-- `flake8`
-
-#### Tests unitaires
-
-- `cd /path/to/Python-OC-Lettings-FR`
-- `source venv/bin/activate`
-- `pytest`
-
-#### Base de données
-
-- `cd /path/to/Python-OC-Lettings-FR`
-- Ouvrir une session shell `sqlite3`
-- Se connecter à la base de données `.open oc-lettings-site.sqlite3`
-- Afficher les tables dans la base de données `.tables`
-- Afficher les colonnes dans le tableau des profils, `pragma table_info(Python-OC-Lettings-FR_profile);`
-- Lancer une requête sur la table des profils, `select user_id, favorite_city from
-  Python-OC-Lettings-FR_profile where favorite_city like 'B%';`
-- `.quit` pour quitter
-
-#### Panel d'administration
-
-- Aller sur `http://localhost:8000/admin`
-- Connectez-vous avec l'utilisateur `admin`, mot de passe `Abc1234!`
-
-### Windows
-
-Utilisation de PowerShell, comme ci-dessus sauf :
-
-- Pour activer l'environnement virtuel, `.\venv\Scripts\Activate.ps1` 
-- Remplacer `which <my-command>` par `(Get-Command <my-command>).Path`
+asgiref==3.5.0
+atomicwrites==1.4.0
+attrs==21.4.0
+certifi==2021.10.8
+charset-normalizer==2.0.12
+circleci==1.2.2
+colorama==0.4.4
+Django==3.0
+entrypoints==0.3
+flake8==3.7.0
+gunicorn==20.1.0
+idna==3.3
+iniconfig==1.1.1
+mccabe==0.6.1
+numpy==1.22.2
+packaging==21.3
+pandas==1.4.1
+pluggy==1.0.0
+py==1.11.0
+pycodestyle==2.5.0
+pyflakes==2.1.1
+pyparsing==3.0.7
+pytest==7.0.1
+pytest-django==3.9.0
+python-dateutil==2.8.2
+pytz==2021.3
+requests==2.27.1
+sentry-sdk==1.5.7
+six==1.16.0
+sqlparse==0.4.2
+tomli==2.0.1
+urllib3==1.26.8
