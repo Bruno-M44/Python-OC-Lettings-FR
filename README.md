@@ -126,7 +126,7 @@ La commande unique pour récupération de l'application en local et son démarra
 
 `docker run --pull always -p 8000:8000 --name oc-lettings brunom44/oc-lettings:lastest && docker-compose up`  
 
-L'application est accessible à l'adresse suivante : [http://localhost:8000/]
+L'application est accessible à l'adresse suivante : [http://localhost:8000/](http://localhost:8000/)
 
 ---
 
