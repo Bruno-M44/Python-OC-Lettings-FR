@@ -40,6 +40,8 @@ jobs:
     executor: heroku/default
     steps:
       - checkout
+      - python/install-packages:
+          pkg-manager: pip
       - heroku/install
       - run:
           command: >
@@ -49,9 +51,9 @@ jobs:
       - heroku/deploy-via-git:
           app-name: $HEROKU_APP_NAME
           api-key: HEROKU_API_KEY
-      - run: apt-get install -y sudo
-      - run: ls -al /bin/sh && sudo rm /bin/sh && sudo ln -s /bin/bash /bin/sh && ls -al /bin/sh
-      - run: python manage.py loaddata data.json
+      - run:
+        name: loading data
+        command: python manage.py loaddata data.json
 
 workflows:
   master_commit:
