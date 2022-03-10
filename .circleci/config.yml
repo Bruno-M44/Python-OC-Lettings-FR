@@ -49,6 +49,7 @@ jobs:
       - heroku/deploy-via-git:
           app-name: $HEROKU_APP_NAME
           api-key: HEROKU_API_KEY
+      - run: heroku run python manage.py loaddata data.json
 
 workflows:
   master_commit:
