@@ -40,8 +40,6 @@ jobs:
     executor: heroku/default
     steps:
       - checkout
-      - python/install-packages:
-          pkg-manager: pip
       - heroku/install
       - run:
           command: >
