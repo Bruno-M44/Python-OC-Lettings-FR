@@ -51,7 +51,7 @@ jobs:
           api-key: HEROKU_API_KEY
       - run: 
           command: 
-            heroku run python manage.py loaddata data.json
+            run python manage.py loaddata data.json
 
 workflows:
   master_commit:
