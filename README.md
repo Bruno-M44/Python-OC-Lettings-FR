@@ -99,7 +99,7 @@ Utilisation de PowerShell, comme ci-dessus sauf :
 
 ## CircleCi :
 
-Paramétrage nécessaire : 
+[https://app.circleci.com/pipelines/github/Bruno-M44](https://app.circleci.com/pipelines/github/Bruno-M44)
 
 Création des variables d'environnement au niveau du projet :
 
