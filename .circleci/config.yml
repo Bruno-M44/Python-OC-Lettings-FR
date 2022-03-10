@@ -50,7 +50,8 @@ jobs:
           app-name: $HEROKU_APP_NAME
           api-key: HEROKU_API_KEY
       - run: 
-        worker: heroku run python manage.py loaddata data.json
+        command: 
+          heroku run python manage.py loaddata data.json
 
 workflows:
   master_commit:
