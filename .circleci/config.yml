@@ -1,75 +1,63 @@
 version: 2.1
 
+display:
+  source_url: https://github.com/Bruno-M44/Python-OC-Lettings-FR
+  
+
 orbs:
-  python: circleci/python@1.5.0
+  python: circleci/python@0.3.2
+  docker: circleci/docker@2.0.1
   heroku: circleci/heroku@1.2.6
 
-executors:
-  my-machine:
-    machine: true
-    working_directory: /tmp/workspace
-
 jobs:
-  build-and-test:
-    docker:
-      - image: cimg/python:3.10.2
+  build:
+    executor: python/default
     steps:
       - checkout
-      - python/install-packages:
-          pkg-manager: pip
+      - python/load-cache
+      - python/install-deps
+      - python/save-cache
+
+  test:
+    executor: python/default
+    steps:
+      - checkout
+      - python/load-cache
       - run:
-          name: Run tests
           command: pytest
 
-  build-push-docker:
-    executor: my-machine
-    steps:
-      - checkout
-      - run:
-          name: Build Docker image
-          command: docker build -t $DOCKER_USER/oc-lettings:$CIRCLE_SHA1 .
-      - run:
-          name: Push Docker Image
-          command: |
-            echo $DOCKER_TOKEN | docker login -u $DOCKER_USER --password-stdin
-            docker tag $DOCKER_USER/oc-lettings:$CIRCLE_SHA1 $DOCKER_USER/oc-lettings:lastest
-            docker push $DOCKER_USER/oc-lettings:$CIRCLE_SHA1
-            docker push $DOCKER_USER/oc-lettings:lastest
-
-  heroku_deploy:
+  deploy:
     executor: heroku/default
     steps:
       - checkout
+      # Install Heroku if not already installed
       - heroku/install
-      - run:
-          command: >
-            echo "Please wait for deployment"
-      - run: heroku config:set DJANGO_SECRET_KEY=$DJANGO_SECRET_KEY -a $HEROKU_APP_NAME
-      - run: heroku config:set DSN_SENTRY=$DSN_SENTRY -a $HEROKU_APP_NAME
+      # Deploy app to Heroku
       - heroku/deploy-via-git:
           app-name: $HEROKU_APP_NAME
           api-key: HEROKU_API_KEY
 
 workflows:
-  master_commit:
+  main:
     jobs:
-      - build-and-test:
+      - build
+      - test:
+          requires:
+            - build
+
+      - docker/publish:
+          name: containerize
+          image: $DOCKER_USER/oc-lettings:lastest
+          tag: $CIRCLE_SHA1
+          requires:
+            - build
+            - test
           filters:
             branches:
-              only:
-                - master
-      - build-push-docker:
+              only: master
+      - deploy:
           requires:
-            - build-and-test
-
-      - heroku_deploy:
-          requires:
-            - build-push-docker
-
-  dev_commit:
-    jobs:
-      - build-and-test:
+            - containerize
           filters:
             branches:
-              ignore:
-                - master
+              only: master
