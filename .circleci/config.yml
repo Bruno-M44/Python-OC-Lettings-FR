@@ -47,7 +47,7 @@ workflows:
 
       - docker/publish:
           name: containerize
-          image: $DOCKER_USER/oc-lettings:lastest
+          image: brunom44/oc-lettings
           tag: $CIRCLE_SHA1
           requires:
             - build
