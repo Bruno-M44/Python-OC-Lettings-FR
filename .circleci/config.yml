@@ -56,11 +56,11 @@ jobs:
 workflows:
   master_commit:
     jobs:
-      # - build-and-test:
-      #     filters:
-      #       branches:
-      #         only:
-      #           - master
+      - build-and-test:
+          filters:
+            branches:
+              only:
+                - master
       # - build-push-docker:
       #     requires:
       #       - build-and-test
