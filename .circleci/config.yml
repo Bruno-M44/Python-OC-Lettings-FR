@@ -66,10 +66,10 @@ workflows:
       #     requires:
       #       - build-and-test
 
-      - heroku_deploy:
+      - heroku_deploy
           # requires:
           #   - build-push-docker
-          
+
   dev_commit:
     jobs:
       - build-and-test:
