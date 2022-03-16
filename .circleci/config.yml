@@ -1,63 +1,42 @@
 version: 2.1
 
-display:
-  source_url: https://github.com/Bruno-M44/Python-OC-Lettings-FR
-  
-
-orbs:
-  python: circleci/python@0.3.2
-  docker: circleci/docker@2.0.1
-  heroku: circleci/heroku@1.2.6
-
 jobs:
-  build:
-    executor: python/default
+  build-and-test:
+    docker:
+      - image: circleci/python:3.8
     steps:
       - checkout
-      - python/load-cache
-      - python/install-deps
-      - python/save-cache
-
-  test:
-    executor: python/default
-    steps:
-      - checkout
-      - python/load-cache
       - run:
-          command: pytest
-
-  deploy:
-    executor: heroku/default
+         name: install dependencies and environement
+         command: |
+           python3 -m venv venv
+           . venv/bin/activate
+           pip install -r requirements.txt
+      - run:
+         name: Test with pytest
+         command: |
+           . venv/bin/activate
+           pytest
+  deploy-dev:
+    machine: true
     steps:
       - checkout
-      # Install Heroku if not already installed
-      - heroku/install
-      # Deploy app to Heroku
-      - heroku/deploy-via-git:
-          app-name: $HEROKU_APP_NAME
-          api-key: HEROKU_API_KEY
-
+      - run:
+          name: Build and push Docker image to Heroku
+          command: |
+            sudo curl https://cli-assets.heroku.com/install.sh | sh
+            HEROKU_API_KEY=$HEROKU_API_KEY heroku container:login
+            HEROKU_API_KEY=$HEROKU_API_KEY heroku container:push -a $HEROKU_APP_NAME web
+            HEROKU_API_KEY=$HEROKU_API_KEY heroku container:release -a $HEROKU_APP_NAME web
 workflows:
   main:
     jobs:
-      - build
-      - test:
+      - build-and-test
+      - deploy-dev:
           requires:
-            - build
-
-      - docker/publish:
-          name: containerize
-          image: brunom44/oc-lettings
-          tag: $CIRCLE_SHA1
-          requires:
-            - build
-            - test
-          filters:
-            branches:
-              only: master
-      - deploy:
-          requires:
-            - containerize
+            - build-and-test
+          context:
+            - projet13
           filters:
             branches:
               only: master
