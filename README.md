@@ -114,7 +114,7 @@ Création des variables d'environnement au niveau du projet :
 |   DOCKER_TOKEN   |   `zJVkhL4wERc32a`   |  
 |   DOCKER_USER |   `brunom44`   |  
 | DSN_SENTRY    | `https://9b0b08a4791c473d9332fabedc59e4de@o1162749.ingest.sentry.io/6250264` |  
-| HEROKU_API_KEY  |  `60f3a178-a9be-4958-a5d0-c8b1bbc82ace`  |  
+| HEROKU_API_KEY  |  `96f8ff0b-61e8-49c1-8eb9-ecb6f5257239`  |  
 | HEROKU_APP_NAME | `oc-lettings-b44` |  
 ---
 

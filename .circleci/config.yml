@@ -49,9 +49,6 @@ jobs:
       - heroku/deploy-via-git:
           app-name: $HEROKU_APP_NAME
           api-key: HEROKU_API_KEY
-      - run:
-          name: loading data
-          command: python3 manage.py loaddata data.json
 
 workflows:
   master_commit:
@@ -61,13 +58,13 @@ workflows:
             branches:
               only:
                 - master
-      # - build-push-docker:
-      #     requires:
-      #       - build-and-test
+      - build-push-docker:
+          requires:
+            - build-and-test
 
-      - heroku_deploy
-          # requires:
-          #   - build-push-docker
+      - heroku_deploy:
+          requires:
+            - build-push-docker
 
   dev_commit:
     jobs:
