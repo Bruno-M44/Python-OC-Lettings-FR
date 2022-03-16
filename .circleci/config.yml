@@ -35,8 +35,6 @@ workflows:
       - deploy-dev:
           requires:
             - build-and-test
-          context:
-            - projet13
           filters:
             branches:
               only: master
