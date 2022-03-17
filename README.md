@@ -18,7 +18,7 @@ Dans le reste de la documentation sur le développement local, il est supposé q
 #### Cloner le repository
 
 - `cd /path/to/put/project/in`
-- `git clone https://github.com/OpenClassrooms-Student-Center/Python-OC-Lettings-FR.git`
+- `git clone https://github.com/Bruno-M44/Python-OC-Lettings-FR`
 
 #### Créer l'environnement virtuel
 
@@ -90,10 +90,9 @@ Utilisation de PowerShell, comme ci-dessus sauf :
    
 - Lancement des jobs :
      - build-and-test
-     - si ok, lancement du job build-push-docker :
+     - si ok, lancement du job deploy-dev :
         - Cela va créer une image docker et l'uploader sur le docker hub.
-    - si ok lancement du job heroku_deploy :
-        - Cela va lancer le build de l'application sur Heroku via Git.
+        - L'image docker va ensuite s'installer sur Heroku.
 
 ---
 
@@ -111,8 +110,8 @@ Création des variables d'environnement au niveau du projet :
 |   Nom des Variables  |   Valeurs à renseigner   |  
 |---    |---    |  
 |   DJANGO_SECRET_KEY   |   `fp$9^593hsriajg$_%=5trot9g!1qa@ew(o-1#@=&4%=hp46(s`   |  
-|   DOCKER_TOKEN   |   `zJVkhL4wERc32a`   |  
-|   DOCKER_USER |   `brunom44`   |  
+|   DOCKER_PASSWORD   |   `zJVkhL4wERc32a`   |  
+|   DOCKER_LOGIN |   `brunom44`   |  
 | DSN_SENTRY    | `https://9b0b08a4791c473d9332fabedc59e4de@o1162749.ingest.sentry.io/6250264` |  
 | HEROKU_API_KEY  |  `96f8ff0b-61e8-49c1-8eb9-ecb6f5257239`  |  
 | HEROKU_APP_NAME | `oc-lettings-b44` |  
