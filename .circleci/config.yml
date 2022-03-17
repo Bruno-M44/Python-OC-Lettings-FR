@@ -1,41 +1,62 @@
 version: 2.1
 
+display:
+  source_url: https://github.com/Bruno-M44/Python-OC-Lettings-FR
+  
+
+orbs:
+  python: circleci/python@0.3.2
+  docker: circleci/docker@2.0.1
+  heroku: circleci/heroku@1.2.6
+
 jobs:
-  build-and-test:
-    docker:
-      - image: circleci/python:3.8
+  build:
+    executor: python/default
     steps:
       - checkout
-      - run:
-         name: install dependencies and environement
-         command: |
-           python3 -m venv venv
-           . venv/bin/activate
-           pip install -r requirements.txt
-      - run:
-         name: Test with pytest
-         command: |
-           . venv/bin/activate
-           pytest
-  deploy-dev:
-    machine: true
+      - python/load-cache
+      - python/install-deps
+      - python/save-cache
+
+  test:
+    executor: python/default
     steps:
       - checkout
+      - python/load-cache
       - run:
-          name: Build and push Docker image to Heroku
-          command: |
-            sudo curl https://cli-assets.heroku.com/install.sh | sh
-            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
-            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:push -a $HEROKU_APP_NAME web
-            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a $HEROKU_APP_NAME web
+          command: pytest
+
+  deploy:
+    executor: heroku/default
+    steps:
+      - checkout
+      # Install Heroku if not already installed
+      - heroku/install
+      # Deploy app to Heroku
+      - heroku/deploy-via-git:
+          app-name: $HEROKU_APP_NAME
+          api-key: HEROKU_API_KEY
+
 workflows:
   main:
     jobs:
-      - build-and-test
-      - deploy-dev:
+      - build
+      - test:
           requires:
-            - build-and-test
+            - build
+      - docker/publish:
+          name: containerize
+          image: brunom44/oc-lettings
+          tag: $CIRCLE_SHA1
+          requires:
+            - build
+            - test
           filters:
             branches:
               only: master
-
+      - deploy:
+          requires:
+            - containerize
+          filters:
+            branches:
+              only: master
