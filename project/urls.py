@@ -3,8 +3,11 @@ from django.urls import path, include
 
 from .views import index
 
+
 def trigger_error(request):
     division_by_zero = 1 / 0
+    return division_by_zero
+
 
 urlpatterns = [
     path('', index, name='index'),
