@@ -83,16 +83,19 @@ Utilisation de PowerShell, comme ci-dessus sauf :
 
 #### Lors d'un commit sur n'importe quelle branche autre que la master :
 - Lancement du job :
-    - build-and-test : 
-      - créer le build et lance les tests de l'application
+    - build : 
+      - créer le build
+    - si ok, lancement de test qui lance les tests de l'application
     
 #### Lors d'un commit sur la branche master :
    
 - Lancement des jobs :
-     - build-and-test
-     - si ok, lancement du job deploy-dev :
+     - build
+     - si ok, lancement de test
+     - si ok, lancement du job containerize :
         - Cela va créer une image docker et l'uploader sur le docker hub.
-        - L'image docker va ensuite s'installer sur Heroku.
+     - si ok, lancement de deploy :
+        - L'image docker va s'installer sur Heroku.
 
 ---
 
