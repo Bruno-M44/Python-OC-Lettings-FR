@@ -18,7 +18,7 @@ Dans le reste de la documentation sur le développement local, il est supposé q
 #### Cloner le repository
 
 - `cd /path/to/put/project/in`
-- `git clone https://github.com/OpenClassrooms-Student-Center/Python-OC-Lettings-FR.git`
+- `git clone https://github.com/Bruno-M44/Python-OC-Lettings-FR`
 
 #### Créer l'environnement virtuel
 
@@ -83,23 +83,25 @@ Utilisation de PowerShell, comme ci-dessus sauf :
 
 #### Lors d'un commit sur n'importe quelle branche autre que la master :
 - Lancement du job :
-    - build-and-test : 
-      - créer le build et lance les tests de l'application
+    - build : 
+      - créer le build
+    - si ok, lancement de test qui lance les tests de l'application
     
 #### Lors d'un commit sur la branche master :
    
 - Lancement des jobs :
-     - build-and-test
-     - si ok, lancement du job build-push-docker :
+     - build
+     - si ok, lancement de test
+     - si ok, lancement du job containerize :
         - Cela va créer une image docker et l'uploader sur le docker hub.
-    - si ok lancement du job heroku_deploy :
-        - Cela va lancer le build de l'application sur Heroku via Git.
+     - si ok, lancement de deploy :
+        - L'image docker va s'installer sur Heroku.
 
 ---
 
 ## CircleCi :
 
-Paramétrage nécessaire : 
+[https://app.circleci.com/pipelines/github/Bruno-M44](https://app.circleci.com/pipelines/github/Bruno-M44)
 
 Création des variables d'environnement au niveau du projet :
 
@@ -111,10 +113,10 @@ Création des variables d'environnement au niveau du projet :
 |   Nom des Variables  |   Valeurs à renseigner   |  
 |---    |---    |  
 |   DJANGO_SECRET_KEY   |   `fp$9^593hsriajg$_%=5trot9g!1qa@ew(o-1#@=&4%=hp46(s`   |  
-|   DOCKER_TOKEN   |   `zJVkhL4wERc32a`   |  
-|   DOCKER_USER |   `brunom44`   |  
+|   DOCKER_PASSWORD   |   `zJVkhL4wERc32a`   |  
+|   DOCKER_LOGIN |   `brunom44`   |  
 | DSN_SENTRY    | `https://9b0b08a4791c473d9332fabedc59e4de@o1162749.ingest.sentry.io/6250264` |  
-| HEROKU_API_KEY  |  `60f3a178-a9be-4958-a5d0-c8b1bbc82ace`  |  
+| HEROKU_API_KEY  |  `96f8ff0b-61e8-49c1-8eb9-ecb6f5257239`  |  
 | HEROKU_APP_NAME | `oc-lettings-b44` |  
 ---
 
