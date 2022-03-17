@@ -7,7 +7,6 @@ display:
 orbs:
   python: circleci/python@0.3.2
   docker: circleci/docker@2.0.1
-  heroku: circleci/heroku@1.2.6
 
 jobs:
   build:
@@ -27,15 +26,16 @@ jobs:
           command: pytest
 
   deploy:
-    executor: heroku/default
+    machine: true
     steps:
       - checkout
-      # Install Heroku if not already installed
-      - heroku/install
-      # Deploy app to Heroku
-      - heroku/deploy-via-git:
-          app-name: $HEROKU_APP_NAME
-          api-key: HEROKU_API_KEY
+      - run:
+          name: Push Docker image to Heroku
+          command: |
+            sudo curl https://cli-assets.heroku.com/install.sh | sh
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:push -a $HEROKU_APP_NAME web
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a $HEROKU_APP_NAME web
 
 workflows:
   main:
