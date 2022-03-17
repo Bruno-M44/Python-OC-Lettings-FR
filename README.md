@@ -126,7 +126,7 @@ Création des variables d'environnement au niveau du projet :
 
 La commande unique pour récupération de l'application en local et son démarrage immédiat est :
 
-`docker run --pull always -p 8000:8000 --name oc-lettings brunom44/oc-lettings:lastest && docker-compose up`  
+`docker run --pull always -p 8000:8000 --name oc-lettings brunom44/oc-lettings:9b258b461e92f5904dfc9c9d5d50f13ba1487998`  
 
 L'application est accessible à l'adresse suivante : [http://localhost:8000/](http://localhost:8000/)
 
