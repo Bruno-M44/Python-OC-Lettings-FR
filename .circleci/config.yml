@@ -31,7 +31,9 @@ jobs:
       - checkout
       - python/load-cache
       - run:
-          command: flake8
+          command: |
+            . venv/bin/activate
+            flake8
 
   deploy:
     machine: true
