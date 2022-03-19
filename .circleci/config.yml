@@ -5,7 +5,7 @@ display:
   
 
 orbs:
-  python: circleci/python@2.0.3
+  python: circleci/python@0.3.2
   docker: circleci/docker@2.0.1
 
 jobs:
@@ -13,25 +13,23 @@ jobs:
     executor: python/default
     steps:
       - checkout
-      - python/install-packages:
-          pkg-manager: pip
-      - python/install-packages:
-          pip-dependency-file: requirements.txt
-          pkg-manager: pip
+      - python/load-cache
+      - python/install-deps
+      - python/save-cache
 
   test:
     executor: python/default
     steps:
       - checkout
+      - python/load-cache
       - run:
-          command: |
-            pytest
-          name: Test
+          command: pytest
 
   lint:
     executor: python/default
     steps:
       - checkout
+      - python/load-cache
       - run:
           command: flake8
 
@@ -46,7 +44,6 @@ jobs:
             HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
             HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:push -a $HEROKU_APP_NAME web
             HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a $HEROKU_APP_NAME web
-
 workflows:
   main:
     jobs:
