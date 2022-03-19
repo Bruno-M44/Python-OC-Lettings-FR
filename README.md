@@ -84,15 +84,13 @@ Utilisation de PowerShell, comme ci-dessus sauf :
 
 #### Lors d'un commit sur n'importe quelle branche autre que la master :
 - Lancement du job :
-    - build : 
-      - créer le build
-    - si ok, lancement de test qui lance les tests de l'application
+    - build-and-test: 
+      - créer le build, lance le linter et effectue les tests
     
 #### Lors d'un commit sur la branche master :
    
 - Lancement des jobs :
-     - build
-     - si ok, lancement de test
+     - build-and-test
      - si ok, lancement du job containerize :
         - Cela va créer une image docker et l'uploader sur le docker hub.
      - si ok, lancement de deploy :
