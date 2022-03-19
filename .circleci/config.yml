@@ -42,20 +42,6 @@ workflows:
             branches:
               ignore:
                 - master
-  dev-built-and-deploy:
-    jobs:
-      - approve-build:
-          type: approval
-          filters:
-            branches:
-              ignore:
-                - master
-      - build-push-docker:
-          requires:
-            - approve-build
-      - deploy:
-          requires:
-            - containerize
 
 jobs:
   build-and-test: # This is the name of the job, feel free to change it to better match what you're trying to do!
