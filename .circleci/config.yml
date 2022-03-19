@@ -24,18 +24,7 @@ jobs:
       - python/load-cache
       - run:
           command: pytest
-
-  lint:
-    executor: python/default
-    override:
-      - flake8 ./
-    steps:
-      - checkout
-      - python/load-cache
-      - run:
-          command: flake8
       
-
   deploy:
     machine: true
     steps:
@@ -54,7 +43,7 @@ workflows:
       - test:
           requires:
             - build
-      - lint:
+      - python/flake8:
           requires:
             - build
       - docker/publish:
