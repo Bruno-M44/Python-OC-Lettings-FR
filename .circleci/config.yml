@@ -27,11 +27,11 @@ jobs:
 
   lint:
     executor: python/default
+    override:
+      - flake8 ./
     steps:
       - checkout
       - python/load-cache
-      override:
-      - flake8 ./
       - run:
           command: flake8
       
