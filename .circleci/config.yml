@@ -26,9 +26,7 @@ workflows:
           image: brunom44/oc-lettings
           tag: $CIRCLE_SHA1
           requires:
-            - build
-            - test
-            - lint
+            - build-and-test
           filters:
             branches:
               only: master
