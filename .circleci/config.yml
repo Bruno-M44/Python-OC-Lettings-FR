@@ -30,10 +30,11 @@ jobs:
     steps:
       - checkout
       - python/load-cache
+      override:
+      - flake8 ./
       - run:
-          command: |
-            .\venv\Scripts\activate
-            flake8
+          command: flake8
+      
 
   deploy:
     machine: true
