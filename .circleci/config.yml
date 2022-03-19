@@ -43,9 +43,6 @@ workflows:
       - test:
           requires:
             - build
-      - python/flake8:
-          requires:
-            - build
       - docker/publish:
           name: containerize
           image: brunom44/oc-lettings
@@ -53,7 +50,6 @@ workflows:
           requires:
             - build
             - test
-            - lint
           filters:
             branches:
               only: master
