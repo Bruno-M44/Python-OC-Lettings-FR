@@ -32,7 +32,7 @@ jobs:
       - python/load-cache
       - run:
           command: |
-            . venv/bin/activate
+            .\venv\Scripts\activate
             flake8
 
   deploy:
