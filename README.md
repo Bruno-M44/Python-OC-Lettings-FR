@@ -131,11 +131,4 @@ L'application est accessible à l'adresse suivante : [http://localhost:8000/](ht
 
 ---
 
-## Heroku :
-[L'application sur Heroku](https://oc-lettings-b44.herokuapp.com/)  
 
----
-
-## Sentry :
-
-Sentry permet de faire le [monitoring de l'application](https://sentry.io/organizations/my-company-6c/projects/oc-lettings/?project=6250264).
